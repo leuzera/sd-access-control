@@ -1,0 +1,4 @@
+- Always read https://github.com/i0natan/nodebestpractices
+
+[] Use PM2 (http://pm2.keymetrics.io/) to automatically reload server on errors
+[] Use a log library, like winston (https://github.com/winstonjs/winston)
