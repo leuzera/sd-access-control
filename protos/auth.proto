@@ -7,10 +7,10 @@ service PersonAuth {
 }
 
 message Person {
-    string type = 1
-    string token = 2
+    string type = 1;
+    string token = 2;
 }
 
 message Auth {
-    bool authorized = 1
+    bool authorized = 1;
 }
