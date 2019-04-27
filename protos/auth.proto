@@ -7,7 +7,12 @@ service PersonAuth {
 }
 
 message Person {
-    string type = 1;
+    enum TokenType {
+        BIOMETRIC = 0;
+        JWT = 1;
+    }
+
+    TokenType type = 1;
     string token = 2;
 }
 
