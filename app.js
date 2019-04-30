@@ -1,13 +1,8 @@
 import { loadPackageDefinition, Server, ServerCredentials } from 'grpc';
 import { load } from '@grpc/proto-loader';
+import { AuthHandler } from './src/auth';
 
 const ADDR = '0.0.0.0:8080';
-
-class AuthHandler {
-    authPerson(call, callback) {
-        return callback(null, true);
-    }
-}
 
 const server = (bindPath, handler) => {
     load('auth.proto', { includeDirs: ['./protos'] })
