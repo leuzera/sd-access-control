@@ -1,7 +1,7 @@
-const grpc = require('grpc');
-const loader = require('@grpc/proto-loader');
+import { loadPackageDefinition, Server, ServerCredentials } from 'grpc';
+import { load } from '@grpc/proto-loader';
 
-const ADDR = '0.0.0.0:8080'
+const ADDR = '0.0.0.0:8080';
 
 class AuthHandler {
     authPerson(call, callback) {
@@ -10,21 +10,21 @@ class AuthHandler {
 }
 
 const server = (bindPath, handler) => {
-    loader.load('auth.proto', { includeDirs: ['./protos'] })
+    load('auth.proto', { includeDirs: ['./protos'] })
         .then((packageDefinition) => {
-            const package = grpc.loadPackageDefinition(packageDefinition);
-            const service = package.person_auth.PersonAuth.service;
-            const server = new grpc.Server();
+            const packageDef = loadPackageDefinition(packageDefinition);
+            const service = packageDef.person_auth.PersonAuth.service;
+            const server = new Server();
 
             server.addService(service, handler);
-            server.bind(bindPath, grpc.ServerCredentials.createInsecure());
+            server.bind(bindPath, ServerCredentials.createInsecure());
 
             server.start();
             console.log('Server started at ', bindPath);
         })
         .catch((e) => {
-            console.log('error: ', e)
+            console.log('error: ', e);
         });
-}
+};
 
-server(ADDR, new AuthHandler);
+server(ADDR, new AuthHandler());
