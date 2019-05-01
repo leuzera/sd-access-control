@@ -1,15 +1,14 @@
 const grpc = require("grpc");
 const loader = require("@grpc/proto-loader");
-
-const ADDR = "0.0.0.0:8080";
+const config = require("../src/config");
 
 loader
-  .load("auth.proto", { includeDirs: ["./src/protos"] })
+  .load("auth.proto", { includeDirs: ["./src/grpc/protos"] })
   .then(packageDefinition => {
     const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 
     const client = new protoDescriptor.person_auth.PersonAuth(
-      ADDR,
+      `0.0.0.0:${config.grpc_port}`,
       grpc.credentials.createInsecure()
     );
 
@@ -19,6 +18,7 @@ loader
       "error",
       "nothinghere"
     ];
+
     for (let t of tokens) {
       client.authPerson({ type: 1, token: t }, (err, res) => {
         if (err) console.error(err);
