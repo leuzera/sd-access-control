@@ -103,3 +103,6 @@ typings/
 
 ### WebStorm/Intellij files ###
 .idea/
+
+### My secrets ###
+.env
