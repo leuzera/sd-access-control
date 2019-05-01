@@ -1,3 +1,6 @@
-import { Mongoose } from "mongoose";
+const Mongoose = require("mongoose");
+const config = require("../config");
 
-const database = Mongoose.connect(uri, { useNewUrlParser: true });
+const database = Mongoose.connect(config.mongo_uri, { useNewUrlParser: true });
+
+module.exports = database;
