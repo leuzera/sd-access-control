@@ -19,7 +19,7 @@ const config = convict({
   rest_port: {
     doc: "The REST API port to bind.",
     format: "port",
-    default: 8080,
+    default: 8081,
     env: "REST_PORT",
     arg: "rest_port"
   },
@@ -41,9 +41,9 @@ const config = convict({
 
 // Load environment dependent configuration
 var env = config.get("env");
-config.loadFile(`${env}.json`);
+config.loadFile(`./src/config/${env}.json`);
 
 // Perform validation
 config.validate({ allowed: "strict" });
 
-module.exports = config;
+module.exports = config.getProperties();
