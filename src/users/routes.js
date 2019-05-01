@@ -8,7 +8,7 @@ module.exports = router => {
 
   router
     .route("/user/id")
-    .get(controler.recoverUser)
+    .get(controller.recoverUser)
     .put(controller.updateUser)
     .delete(controller.deleteUser);
 };
