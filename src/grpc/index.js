@@ -4,7 +4,7 @@ const AuthHandler = require("./auth.js");
 
 const GrpcServer = port => {
   loader
-    .load("auth.proto", { includeDirs: ["./src/protos"] })
+    .load("auth.proto", { includeDirs: ["./src/grpc/protos"] })
     .then(packageDefinition => {
       const packageDef = grpc.loadPackageDefinition(packageDefinition);
       const service = packageDef.person_auth.PersonAuth.service;
