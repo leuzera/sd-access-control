@@ -3,8 +3,12 @@ const controller = require("./controller");
 module.exports = router => {
   router
     .route("/users")
-    .get(controller.recover)
-    .post(controller.create)
-    .put(controller.update)
-    .delete(controller.delete);
+    .get(controller.recoverAllUsers)
+    .post(controller.createUser);
+
+  router
+    .route("/user/id")
+    .get(controler.recoverUser)
+    .put(controller.updateUser)
+    .delete(controller.deleteUser);
 };

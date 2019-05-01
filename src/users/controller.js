@@ -32,11 +32,13 @@ function createUser(req, res) {
 
 function deleteUser(req, res) {}
 function updateUser(req, res) {}
-function findUser(req, res) {}
+function recoverAllUsers(req, res) {}
+function recoverUser(req, res) {}
 
 module.exports = {
-  create: createUser,
-  delete: deleteUser,
-  update: updateUser,
-  recover: findUser
+  createUser: createUser,
+  deleteUser: deleteUser,
+  updateUser: updateUser,
+  recoverUser: recoverUser,
+  recoverAllUsers: recoverAllUsers
 };
