@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const routes = require("./routes");
+const routes = require("./routes")(express.Router());
 
 const RestServer = port => {
   const app = express();
