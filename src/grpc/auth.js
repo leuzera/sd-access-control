@@ -7,14 +7,14 @@ class AuthHandler {
   authPerson(call, callback) {
     let authorized = false;
 
-    for (let i in users) {
-      if (users[i].code === call.request.token) {
+    for (let u of users) {
+      if (u.code === call.request.token) {
         authorized = true;
       }
     }
 
     console.log(authorized);
-    return callback(null, {authorized});
+    return callback(null, { authorized });
   }
 }
 

@@ -4,7 +4,7 @@ const loader = require("@grpc/proto-loader");
 const ADDR = "0.0.0.0:8080";
 
 loader
-  .load("auth.proto", { includeDirs: ["./protos"] })
+  .load("auth.proto", { includeDirs: ["./src/protos"] })
   .then(packageDefinition => {
     const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 
