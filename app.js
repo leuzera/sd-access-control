@@ -1,4 +1,7 @@
 const GrpcServer = require("./src/grpc");
+const RestServer = require("./src/rest");
 
-const GRPCADDR = "0.0.0.0:8080";
-GrpcServer(GRPCADDR);
+const stage = require("./src/config")[process.env.NODE_ENV];
+
+GrpcServer(stage.grpcport);
+RestServer(stage.restport);

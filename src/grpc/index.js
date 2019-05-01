@@ -2,7 +2,7 @@ const grpc = require("grpc");
 const loader = require("@grpc/proto-loader");
 const AuthHandler = require("./auth.js");
 
-const GrpcServer = bindPath => {
+const GrpcServer = port => {
   loader
     .load("auth.proto", { includeDirs: ["./src/protos"] })
     .then(packageDefinition => {
@@ -11,10 +11,10 @@ const GrpcServer = bindPath => {
       const server = new grpc.Server();
 
       server.addService(service, new AuthHandler());
-      server.bind(bindPath, grpc.ServerCredentials.createInsecure());
+      server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
 
       server.start();
-      console.log("Server started at ", bindPath);
+      console.log("Grpc Server started at port ", port);
     })
     .catch(e => {
       console.log("error: ", e);
