@@ -10,6 +10,7 @@ message Person {
     enum TokenType {
         BIOMETRIC = 0;
         JWT = 1;
+        NFC = 2;
     }
 
     TokenType type = 1;
