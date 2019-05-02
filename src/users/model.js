@@ -10,7 +10,7 @@ const userSchema = new schema({
   password: { type: "String", required: true, trim: true }
 });
 
-userSchema.pre("save", next => {
+userSchema.pre("save", function(next) {
   const user = this;
 
   if (!user.isModified || !user.isNew) {
