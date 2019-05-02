@@ -4,7 +4,7 @@
   "description": "Module to control personal access to buildings",
   "main": "app.js",
   "scripts": {
-    "dev": "NODE_ENV=development node app.js",
+    "dev": "NODE_ENV=development nodemon app.js",
     "test": "node ./test/client.js"
   },
   "author": "Leonardo Moraes Fleury",
@@ -28,6 +28,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
+    "nodemon": "^1.19.0",
     "prettier": "^1.17.0"
   },
   "eslintConfig": {
