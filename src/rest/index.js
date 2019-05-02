@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const logger = require("../logger");
 const routes = require("./routes")(express.Router());
 
 const RestServer = port => {
@@ -15,7 +16,7 @@ const RestServer = port => {
   app.use("/api/v1", routes);
 
   app.listen(`${port}`, () => {
-    console.log(`API Server started at port ${port}`);
+    logger.info(`API Server started at port ${port}`);
   });
 };
 

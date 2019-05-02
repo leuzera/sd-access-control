@@ -1,6 +1,7 @@
 const grpc = require("grpc");
 const loader = require("@grpc/proto-loader");
 const AuthHandler = require("./auth.js");
+const logger = require("../logger");
 
 const GrpcServer = port => {
   loader
@@ -14,10 +15,10 @@ const GrpcServer = port => {
       server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
 
       server.start();
-      console.log("Grpc Server started at port ", port);
+      logger.info(`Grpc Server started at port ${port}`);
     })
     .catch(e => {
-      console.log("error: ", e);
+      logger.error(e);
     });
 };
 
