@@ -54,6 +54,7 @@ function deleteUser(req, res) {
 }
 
 function updateUser(req, res) {
+  // Not implemented
   res.status(501);
 }
 
