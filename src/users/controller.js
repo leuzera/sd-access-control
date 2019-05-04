@@ -35,7 +35,7 @@ function recoverAllUsers(req, res) {
       logger.error(`Error retrieving users.\n${err}`);
       res.status(500).send({ status: 500, error: err.errmsg });
     } else {
-      res.status(201).send({ status: 201, users: users });
+      res.status(200).send({ status: 200, users: users });
     }
   });
 }
@@ -65,7 +65,7 @@ function recoverUser(req, res) {
       logger.error(`Error retrieving user.\n${err}`);
       res.status(500).send({ status: 500, error: err.errmsg });
     } else {
-      res.status(201).send({ status: 201, user: user });
+      res.status(200).send({ status: 200, user: user });
     }
   });
 }
