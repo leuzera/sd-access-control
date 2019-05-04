@@ -6,8 +6,16 @@ const config = require("../config");
 const schema = Mongoose.Schema;
 
 const userSchema = new schema({
-  name: { type: "String", required: true, trim: true, unique: true },
-  password: { type: "String", required: true, trim: true }
+  name: { type: String, required: true, trim: true, unique: true },
+  password: { type: String, required: true, trim: true },
+  type: {
+    type: String,
+    required: true,
+    trim: true,
+    enum: ["customer", "visitor", "employee"],
+    default: "visitor"
+  },
+  admin: { type: Boolean, required: true, default: false }
 });
 
 userSchema.pre("save", function(next) {

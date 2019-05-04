@@ -5,8 +5,8 @@ const logger = require("../logger");
 function createUser(req, res) {
   database.then(
     () => {
-      const { name, password } = req.body;
-      const user = new UserModel({ name, password });
+      const { name, password, type, admin } = req.body;
+      const user = new UserModel({ name, password, type, admin });
 
       user.save((err, user) => {
         if (!err) {
