@@ -2,7 +2,7 @@
 
 [] Update README.md
 [] Use PM2 (http://pm2.keymetrics.io/) to automatically reload server on errors
-[] Use a log library, like winston (https://github.com/winstonjs/winston)
+[x] Use a log library, like winston (https://github.com/winstonjs/winston)
 [] Follow express best pratices:
     https://expressjs.com/en/advanced/best-practice-performance.html
     https://expressjs.com/en/advanced/best-practice-security.html
