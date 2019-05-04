@@ -29,17 +29,17 @@ userSchema.pre("save", function(next) {
   }
 });
 
-userSchema.methods.comparePassword = function(candidatePassword, cb) {
+userSchema.methods.comparePassword = function(candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
     if (err) {
       logger.error(`Error while authenticating user.\n${err}`);
-      return cb(err);
+      return callback(err);
     }
 
     if (isMatch) logger.debug(`User authenticated.\n${this}`);
     else logger.debug(`User not authenticated.\n${this}`);
 
-    cb(null, isMatch);
+    callback(null, isMatch);
   });
 };
 
