@@ -1,39 +1,85 @@
 const UserModel = require("./model");
 const database = require("../database");
+const logger = require("../logger");
 
 function createUser(req, res) {
   database.then(
     () => {
-      let result = {};
-      let status = 201;
-
       const { name, password } = req.body;
       const user = new UserModel({ name, password });
+
       user.save((err, user) => {
         if (!err) {
-          result.status = status;
-          result.result = user;
+          logger.debug(`New user: ${user}`);
+
+          res.status(201).send({ status: 201, result: user });
         } else {
-          status = 500;
-          result.status = status;
-          result.error = err;
+          logger.error("Error while saving user.");
+          logger.error(`${err}`);
+          res.status(500).send({ status: 500, error: err.errmsg });
         }
-        res.status(status).send(result);
       });
     },
     err => {
-      status = 500;
-      result.status = status;
-      result.error = err;
-      res.status(status).send(result);
+      logger.error("Error while creating user.");
+      logger.error(`${err}`);
+
+      res.status(500).send({ status: 500, error: err });
     }
   );
 }
 
-function deleteUser(req, res) {}
-function updateUser(req, res) {}
-function recoverAllUsers(req, res) {}
-function recoverUser(req, res) {}
+function recoverAllUsers(req, res) {
+  UserModel.find({}, (err, users) => {
+    if (err) {
+      logger.error(`Error retrieving users.\n${err}`);
+      res.status(500).send({ status: 500, error: err.errmsg });
+    } else {
+      res.status(201).send({ status: 201, users: users });
+    }
+  });
+}
+
+function deleteUser(req, res) {
+  logger.debug(`Deleting user ${req.params.name}`);
+
+  UserModel.findOneAndDelete({ name: req.params.name }, err => {
+    if (err) {
+      logger.error(`Error deleting user.\n${err}`);
+      res.status(500).send({ status: 500, error: err.errmsg });
+    } else {
+      res.status(204);
+    }
+  });
+}
+
+function updateUser(req, res) {
+  res.status(501);
+}
+
+function recoverUser(req, res) {
+  logger.debug(`Recovering user ${req.params.name}`);
+  UserModel.find({ name: req.params.name }, (err, user) => {
+    if (err) {
+      logger.error(`Error retrieving user.\n${err}`);
+      res.status(500).send({ status: 500, error: err.errmsg });
+    } else {
+      res.status(201).send({ status: 201, user: user });
+    }
+  });
+}
+
+function findUserById(id) {
+  logger.debug(`Searching for user whith id: ${id}`);
+  UserModel.find({ _id: id }, (err, user) => {
+    if (err) {
+      logger.error(`${err}`);
+      return false;
+    } else {
+      return true;
+    }
+  });
+}
 
 module.exports = {
   createUser: createUser,
