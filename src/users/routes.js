@@ -7,7 +7,7 @@ module.exports = router => {
     .post(controller.createUser);
 
   router
-    .route("/user/:id")
+    .route("/user/:name")
     .get(controller.recoverUser)
     .put(controller.updateUser)
     .delete(controller.deleteUser);
