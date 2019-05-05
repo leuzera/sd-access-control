@@ -139,8 +139,6 @@ module.exports = {
   updateBuilding,
 
   createFloor,
-  recoverFloor,
-  recoverAllFloors,
   deleteFloor,
   updateFloor
 };
