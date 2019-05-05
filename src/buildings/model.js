@@ -6,7 +6,7 @@ const Schema = Mongoose.Schema;
 const buildingSchema = new Schema({
   name: { type: String, required: true, trim: true },
   max_capacity: { type: Number, required: true },
-  occupancy: { type: Number, required: true },
+  occupancy: { type: Number, required: true, default: 0 },
   floors: [{ type: Schema.Types.ObjectId, ref: "Floors" }]
 });
 
@@ -65,7 +65,4 @@ buildingSchema.methods.leave = function(floor_id, callback) {
 const Floor = Mongoose.model("Floors", floorsSchema);
 const Building = Mongoose.model("Building", buildingSchema);
 
-module.exports = {
-  Building,
-  Floor
-};
+module.exports = Building;
