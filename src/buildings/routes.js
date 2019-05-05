@@ -27,19 +27,41 @@ module.exports = router => {
     });
 
   router
-    .route("/building/:id")
-    .get(controller.recoverBuilding)
-    .put(controller.updateBuilding)
-    .delete(controller.deleteBuilding);
+    .route("/building/:name")
+    .get((req, res) => {
+      controller.recoverBuilding(req.params.name, (err, building) => {
+        if (!err) {
+          res.status(200).send({ status: 200, building: building });
+        } else {
+          res.status(500).send({ status: 500 });
+        }
+      });
+    })
+    .put((req, res) => {
+      res.status(501).send({ status: 501, message: "Not implemented" });
+    })
+    .delete((req, res) => {
+      res.status(501).send({ status: 501, message: "Not implemented" });
+    });
+
+  router.route("/building/:name/floors").post((req, res) => {
+    const { number, capacity } = req.body;
+
+    controller.createFloor(number, capacity, req.params.name, (err, build) => {
+      if (err) {
+        res.status(500).send({ status: 500, error: err });
+      } else {
+        res.status(201).send({ status: 201, build: build });
+      }
+    });
+  });
 
   router
-    .route("/building/:id/floors")
-    .get(controller.recoverAllFloors)
-    .post(controller.createFloor);
-
-  router
-    .route("/building/:id/floor/:number")
-    .get(controller.recoverFloor)
-    .put(controller.updateFloor)
-    .delete(controller.deleteFloor);
+    .route("/building/:name/floor/:number")
+    .put((req, res) => {
+      res.status(501).send({ status: 501, message: "Not implemented" });
+    })
+    .delete((req, res) => {
+      res.status(501).send({ status: 501, message: "Not implemented" });
+    });
 };

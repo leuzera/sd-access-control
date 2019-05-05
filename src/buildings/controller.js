@@ -1,11 +1,11 @@
-const BuildingModel = require("./model");
+const { Building, Floor } = require("./model");
 const database = require("../database");
 const logger = require("../logger");
 
 function createBuilding(name, max_capacity, callback) {
   database.then(
     () => {
-      const building = new BuildingModel({ name, max_capacity });
+      const building = new Building({ name, max_capacity });
 
       building.save((err, building) => {
         if (err) {
@@ -27,28 +27,109 @@ function createBuilding(name, max_capacity, callback) {
 }
 
 function recoverAllBuildings(callback) {
-  database.then(() => {
-    BuildingModel.find({}, (err, builds) => {
-      if (err) {
-        logger.error("Error retrieving buildings.");
-        logger.error(err);
-        callback(err);
-      } else {
-        callback(null, builds);
-      }
-    });
-  });
+  database.then(
+    () => {
+      Building.find({}, (err, builds) => {
+        if (err) {
+          logger.error("Error retrieving buildings.");
+          logger.error(err);
+          callback(err);
+        } else {
+          callback(null, builds);
+        }
+      });
+    },
+    err => {
+      logger.error("Error conecting to database.");
+      logger.error(err);
+      callback(err);
+    }
+  );
 }
 
-function recoverBuilding(id, callback) {}
-function deleteBuilding(id, callback) {}
-function updateBuilding(id, params, callback) {}
+function recoverBuilding(name, callback) {
+  database.then(
+    () => {
+      Building.find({ name: name }, (err, build) => {
+        if (err) {
+          logger.error("Error retrieving buildings.");
+          logger.error(err);
+          callback(err);
+        } else {
+          callback(null, build);
+        }
+      });
+    },
+    err => {
+      logger.error("Error conecting to database.");
+      logger.error(err);
+      callback(err);
+    }
+  );
+}
 
-function createFloor(number, capacity, buildingId, callback) {}
-function recoverFloor(buildingId, number, callback) {}
-function recoverAllFloors(buildingId, callback) {}
-function deleteFloor(buildingId, number, callback) {}
-function updateFloor(buildingId, floor, callback) {}
+function deleteBuilding(name, callback) {
+  database.then(
+    () => {
+      Building.findOneAndDelete({ name: name }, err => {
+        if (err) {
+          logger.error("Error retrieving buildings.");
+          logger.error(err);
+          callback(err);
+        } else {
+          callback(null, true);
+        }
+      });
+    },
+    err => {
+      logger.error("Error conecting to database.");
+      logger.error(err);
+      callback(err);
+    }
+  );
+}
+function updateBuilding(name, params, callback) {}
+
+function createFloor(number, max_capacity, buildingName, callback) {
+  database.then(
+    () => {
+      Building.findOne({ name: buildingName }, (err, build) => {
+        logger.debug(err);
+        logger.debug(build);
+
+        if (err) {
+          callback(err);
+        } else {
+          logger.debug(build.floors);
+
+          const floor = new Floor({
+            number,
+            max_capacity,
+            buildingId: build._id
+          });
+
+          build.floors.push(floor);
+
+          build.save((err, build) => {
+            if (err) {
+              callback(err);
+            } else {
+              callback(null, build);
+            }
+          });
+        }
+      });
+    },
+    err => {
+      logger.error("Error conecting to database.");
+      logger.error(err);
+      callback(err);
+    }
+  );
+}
+
+function deleteFloor(buildingName, number, callback) {}
+function updateFloor(buildingName, floor, callback) {}
 
 module.exports = {
   createBuilding,

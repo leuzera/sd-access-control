@@ -4,7 +4,7 @@ const logger = require("../logger");
 const Schema = Mongoose.Schema;
 
 const buildingSchema = new Schema({
-  name: { type: String, required: true, trim: true },
+  name: { type: String, required: true, trim: true, unique: true },
   max_capacity: { type: Number, required: true },
   occupancy: { type: Number, required: true, default: 0 },
   floors: [{ type: Schema.Types.ObjectId, ref: "Floors" }]
@@ -16,31 +16,6 @@ const floorsSchema = new Schema({
   capacity: { type: Number, required: true },
   occupancy: { type: Number, required: true, default: 0 }
 });
-
-buildingSchema.methods.addFloor = function(params, callback) {
-  let { number, capacity } = params;
-
-  let floor = new Floor({
-    _buildingId: this._id,
-    number: number,
-    capacity: capacity
-  });
-
-  floor.save(err => {
-    if (err) {
-      logger.error(err);
-      callback(err);
-    }
-  });
-
-  this.floors.push(floor);
-  this.save(err => {
-    if (err) {
-      logger.error(err);
-      callback(err);
-    }
-  });
-};
 
 buildingSchema.methods.enter = function(params, callback) {
   let { building, floor } = params;
@@ -65,4 +40,4 @@ buildingSchema.methods.leave = function(floor_id, callback) {
 const Floor = Mongoose.model("Floors", floorsSchema);
 const Building = Mongoose.model("Building", buildingSchema);
 
-module.exports = Building;
+module.exports = { Building, Floor };
