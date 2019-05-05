@@ -29,7 +29,7 @@ function createUser(req, res) {
   );
 }
 
-function recoverAllUsers(req, res) {
+function recoverAllUsers(_req, res) {
   UserModel.find({}, (err, users) => {
     if (err) {
       logger.error(`Error retrieving users.\n${err}`);
