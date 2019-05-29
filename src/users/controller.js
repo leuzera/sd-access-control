@@ -65,7 +65,7 @@ function recoverUser(req, res) {
       logger.error(`Error retrieving user.\n${err}`);
       res.status(500).send({ status: 500, error: err.errmsg });
     } else {
-      res.status(200).send({ status: 200, user: user });
+      res.status(200).send({ status: 200, user: user[0] });
     }
   });
 }
