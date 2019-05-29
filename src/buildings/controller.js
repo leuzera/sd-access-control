@@ -2,10 +2,10 @@ const { Building, Floor } = require("./model");
 const database = require("../database");
 const logger = require("../logger");
 
-function createBuilding(name, max_capacity, callback) {
+function createBuilding(name, maxCapacity, callback) {
   database.then(
     () => {
-      const building = new Building({ name, max_capacity });
+      const building = new Building({ name, maxCapacity });
 
       building.save((err, building) => {
         if (err) {
@@ -90,7 +90,7 @@ function deleteBuilding(name, callback) {
 }
 function updateBuilding(name, params, callback) {}
 
-function createFloor(number, max_capacity, buildingName, callback) {
+function createFloor(number, maxCapacity, buildingName, callback) {
   database.then(
     () => {
       Building.findOne({ name: buildingName }, (err, build) => {
@@ -104,7 +104,7 @@ function createFloor(number, max_capacity, buildingName, callback) {
 
           const floor = new Floor({
             number,
-            max_capacity,
+            maxCapacity,
             buildingId: build._id
           });
 
