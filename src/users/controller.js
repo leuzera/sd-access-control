@@ -83,9 +83,9 @@ function findUserById(id) {
 }
 
 module.exports = {
-  createUser: createUser,
-  deleteUser: deleteUser,
-  updateUser: updateUser,
-  recoverUser: recoverUser,
-  recoverAllUsers: recoverAllUsers
+  createUser,
+  deleteUser,
+  updateUser,
+  recoverUser,
+  recoverAllUsers
 };
