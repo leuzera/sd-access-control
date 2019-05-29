@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const logger = require("../logger");
-var morgan = require("morgan");
 const routes = require("./routes")(express.Router());
+const morgan = require("morgan");
+const helmet = require("helmet");
+const cors = require("cors");
 
 const RestServer = port => {
   const app = express();
@@ -14,6 +16,8 @@ const RestServer = port => {
     })
   );
 
+  app.use(helmet());
+  app.use(cors());
   app.use(morgan("combined"));
   app.use("/api/v1", routes);
 
