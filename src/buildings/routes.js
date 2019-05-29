@@ -60,6 +60,9 @@ module.exports = router => {
 
   router
     .route("/building/:name/floor/:number")
+    .get((req, res) => {
+      res.status(501).send({ status: 501, message: "Not implemented" });
+    })
     .put((req, res) => {
       res.status(501).send({ status: 501, message: "Not implemented" });
     })
