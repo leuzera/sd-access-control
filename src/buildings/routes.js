@@ -31,7 +31,7 @@ module.exports = router => {
     .get((req, res) => {
       controller.recoverBuilding(req.params.name, (err, building) => {
         if (!err) {
-          res.status(200).send({ status: 200, building: building });
+          res.status(200).send({ status: 200, building: building[0] });
         } else {
           res.status(500).send({ status: 500 });
         }
@@ -47,6 +47,8 @@ module.exports = router => {
   router.route("/building/:name/floors").post((req, res) => {
     const { number, capacity } = req.body;
 
+    // TODO: Aumentar a capacidade maxima de predio de acordo com as capacidades de
+    // cada piso
     controller.createFloor(number, capacity, req.params.name, (err, build) => {
       if (err) {
         res.status(500).send({ status: 500, error: err });
