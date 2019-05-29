@@ -3,9 +3,9 @@ const bcrypt = require("bcrypt");
 const logger = require("../logger");
 const config = require("../config");
 
-const schema = Mongoose.Schema;
+const Schema = Mongoose.Schema;
 
-const userSchema = new schema({
+const userSchema = new Schema({
   name: { type: String, required: true, trim: true, unique: true },
   password: { type: String, required: true, trim: true },
   type: {
