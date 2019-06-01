@@ -2,18 +2,17 @@ const Mongoose = require("mongoose");
 
 const Schema = Mongoose.Schema;
 
-const buildingSchema = new Schema({
-  name: { type: String, required: true, trim: true, unique: true },
-  max_capacity: { type: Number, required: true },
-  occupancy: { type: Number, required: true, default: 0 },
-  floors: [{ type: Schema.Types.ObjectId, ref: "Floors" }]
+const floorsSchema = new Schema({
+  number: { type: String, required: true, unique: true },
+  capacity: { type: Number, required: true, default: 0 },
+  occupancy: { type: Number, required: true, default: 0 }
 });
 
-const floorsSchema = new Schema({
-  _buildingId: { type: Schema.Types.ObjectId, ref: "Building" },
-  number: { type: Number, required: true },
-  capacity: { type: Number, required: true },
-  occupancy: { type: Number, required: true, default: 0 }
+const buildingSchema = new Schema({
+  name: { type: String, required: true, trim: true, unique: true },
+  max_capacity: { type: Number, required: true, default: 0 },
+  occupancy: { type: Number, required: true, default: 0 },
+  floors: [floorsSchema]
 });
 
 const Floor = Mongoose.model("Floors", floorsSchema);
