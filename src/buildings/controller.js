@@ -88,7 +88,18 @@ function deleteBuilding(name, callback) {
     }
   );
 }
-function updateBuilding(name, params, callback) {}
+function updateBuilding(name, params, callback) {
+  database.then(
+    () => {
+      callback(null, null);
+    },
+    err => {
+      logger.error("Error conecting to database.");
+      logger.error(err);
+      callback(err);
+    }
+  );
+}
 
 function createFloor(number, maxCapacity, buildingName, callback) {
   database.then(
