@@ -5,21 +5,42 @@ module.exports = router => {
   router
     .route("/groups")
     .get((_req, res) => {
-      res.status(501);
+      controller.recoverAllGroups((err, groups) => {
+        if (!err) {
+          res.status(200).send({ status: 200, groups: groups });
+        } else {
+          res.status(500).send({ status: 500 });
+        }
+      });
     })
     .post((req, res) => {
-      res.status(501);
+      const { name, permission } = req.body;
+      controller.createGroup(name, permission, (err, group) => {
+        logger.debug(group);
+
+        if (!err) {
+          res.status(201).send({ status: 201, group: group });
+        } else {
+          res.status(500).send({ status: 500 });
+        }
+      });
     });
 
   router
     .route("/group/:name")
     .get((req, res) => {
-      res.status(501);
+      controller.recovergroup(req.params.name, (err, group) => {
+        if (!err) {
+          res.status(200).send({ status: 200, group: group[0] });
+        } else {
+          res.status(500).send({ status: 500 });
+        }
+      });
     })
     .put((req, res) => {
-      res.status(501);
+      res.status(501).send({ status: 501, message: "Not implemented" });
     })
     .delete((req, res) => {
-      res.status(501);
+      res.status(501).send({ status: 501, message: "Not implemented" });
     });
 };
