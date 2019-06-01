@@ -9,19 +9,19 @@ module.exports = router => {
         if (!err) {
           res.status(200).send({ status: 200, buildings: buildings });
         } else {
-          res.status(500).send({ status: 500 });
+          res.status(500).send({ status: 500, err: err.message });
         }
       });
     })
     .post((req, res) => {
-      const { name, capacity } = req.body;
-      controller.createBuilding(name, capacity, (err, building) => {
+      const { name } = req.body;
+      controller.createBuilding(name, (err, building) => {
         logger.debug(building);
 
         if (!err) {
           res.status(201).send({ status: 201, building: building });
         } else {
-          res.status(500).send({ status: 500 });
+          res.status(500).send({ status: 500, err: err.message });
         }
       });
     });
@@ -33,7 +33,7 @@ module.exports = router => {
         if (!err) {
           res.status(200).send({ status: 200, building: building[0] });
         } else {
-          res.status(500).send({ status: 500 });
+          res.status(500).send({ status: 500, err: err.message });
         }
       });
     })
@@ -41,7 +41,17 @@ module.exports = router => {
       res.status(501).send({ status: 501, message: "Not implemented" });
     })
     .delete((req, res) => {
-      res.status(501).send({ status: 501, message: "Not implemented" });
+      controller.deleteBuilding(req.params.name, (err, result) => {
+        if (!err) {
+          logger.debug("Not error.");
+          if (result) {
+            logger.debug("Result === true");
+            res.status(204).send({ status: 204 });
+          }
+        } else {
+          res.status(500).send({ status: 500, err: err.message });
+        }
+      });
     });
 
   router.route("/building/:name/floors").post((req, res) => {
@@ -51,7 +61,7 @@ module.exports = router => {
     // cada piso
     controller.createFloor(number, capacity, req.params.name, (err, build) => {
       if (err) {
-        res.status(500).send({ status: 500, error: err });
+        res.status(500).send({ status: 500, err: err.message });
       } else {
         res.status(201).send({ status: 201, build: build });
       }
