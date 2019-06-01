@@ -19,7 +19,7 @@ function createBuilding(name, callback) {
       });
     },
     err => {
-      logger.error("Error conecting to database.");
+      logger.error("Error connecting to database.");
       logger.error(err);
       callback(err);
     }
@@ -106,21 +106,13 @@ function createFloor(number, maxCapacity, buildingName, callback) {
   database.then(
     () => {
       Building.findOne({ name: buildingName }, (err, build) => {
-        logger.debug(err);
-        logger.debug(build);
-
         if (err) {
           callback(err);
         } else {
-          logger.debug(build.floors);
-
-          build.floors.push({
+          build.floors.addToSet({
             number: number,
             capacity: maxCapacity
           });
-
-          logger.debug(typeof maxCapacity);
-          logger.debug(typeof build.max_capacity);
 
           build.max_capacity = build.max_capacity + Number(maxCapacity);
 
@@ -142,8 +134,55 @@ function createFloor(number, maxCapacity, buildingName, callback) {
   );
 }
 
-function deleteFloor(buildingName, number, callback) {}
-function updateFloor(buildingName, floor, callback) {}
+function deleteFloor(buildingName, id, callback) {
+  database.then(
+    () => {
+      Building.findOne({ name: buildingName }, (err, build) => {
+        if (err) {
+          callback(err);
+        } else {
+          build.max_capacity = build.max_capacity - build.floors.id(id).capacity;
+          build.floors.id(id).remove();
+
+          build.save((err, build) => {
+            if (err) callback(err);
+            callback(null, true);
+          });
+        }
+      });
+    },
+    err => {
+      logger.error("Error connecting to database.");
+      logger.error(err);
+      callback(err);
+    }
+  );
+}
+
+function updateFloorCapacity(buildingName, id, capacity, callback) {
+  database.then(
+    () => {
+      Building.findOne({ name: buildingName }, (err, build) => {
+        if (err) {
+          callback(err);
+        } else {
+          build.max_capacity = build.max_capacity - build.floors.id(id).capacity + Number(capacity);
+          build.floors.id(id).capacity = capacity;
+
+          build.save((err, build) => {
+            if (err) callback(err);
+            callback(null, build);
+          });
+        }
+      });
+    },
+    err => {
+      logger.error("Error connecting to database.");
+      logger.error(err);
+      callback(err);
+    }
+  );
+}
 
 module.exports = {
   createBuilding,
@@ -154,5 +193,5 @@ module.exports = {
 
   createFloor,
   deleteFloor,
-  updateFloor
+  updateFloorCapacity
 };

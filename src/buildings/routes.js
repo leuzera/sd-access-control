@@ -16,8 +16,6 @@ module.exports = router => {
     .post((req, res) => {
       const { name } = req.body;
       controller.createBuilding(name, (err, building) => {
-        logger.debug(building);
-
         if (!err) {
           res.status(201).send({ status: 201, building: building });
         } else {
@@ -56,9 +54,6 @@ module.exports = router => {
 
   router.route("/building/:name/floors").post((req, res) => {
     const { number, capacity } = req.body;
-
-    // TODO: Aumentar a capacidade maxima de predio de acordo com as capacidades de
-    // cada piso
     controller.createFloor(number, capacity, req.params.name, (err, build) => {
       if (err) {
         res.status(500).send({ status: 500, err: err.message });
@@ -69,14 +64,30 @@ module.exports = router => {
   });
 
   router
-    .route("/building/:name/floor/:number")
-    .get((req, res) => {
-      res.status(501).send({ status: 501, message: "Not implemented" });
-    })
+    .route("/building/:name/floor/:id")
     .put((req, res) => {
-      res.status(501).send({ status: 501, message: "Not implemented" });
+      controller.updateFloorCapacity(
+        req.params.name,
+        req.params.id,
+        req.body.capacity,
+        (err, build) => {
+          if (!err) {
+            res.status(201).send({ status: 201, build: build });
+          } else {
+            res.status(500).send({ status: 500, err: err.message });
+          }
+        }
+      );
     })
     .delete((req, res) => {
-      res.status(501).send({ status: 501, message: "Not implemented" });
+      controller.deleteFloor(req.params.name, req.params.id, (err, result) => {
+        if (!err) {
+          if (result) {
+            res.status(204).send({ status: 204 });
+          }
+        } else {
+          res.status(500).send({ status: 500, err: err.message });
+        }
+      });
     });
 };
