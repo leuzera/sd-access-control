@@ -2,10 +2,10 @@ const { Building, Floor } = require("./model");
 const database = require("../database");
 const logger = require("../logger");
 
-function createBuilding(name, maxCapacity, callback) {
+function createBuilding(name, callback) {
   database.then(
     () => {
-      const building = new Building({ name, maxCapacity });
+      const building = new Building({ name: name });
 
       building.save((err, building) => {
         if (err) {
@@ -40,7 +40,7 @@ function recoverAllBuildings(callback) {
       });
     },
     err => {
-      logger.error("Error conecting to database.");
+      logger.error("Error connecting to database.");
       logger.error(err);
       callback(err);
     }
@@ -61,7 +61,7 @@ function recoverBuilding(name, callback) {
       });
     },
     err => {
-      logger.error("Error conecting to database.");
+      logger.error("Error connecting to database.");
       logger.error(err);
       callback(err);
     }
@@ -82,19 +82,20 @@ function deleteBuilding(name, callback) {
       });
     },
     err => {
-      logger.error("Error conecting to database.");
+      logger.error("Error connecting to database.");
       logger.error(err);
       callback(err);
     }
   );
 }
+
 function updateBuilding(name, params, callback) {
   database.then(
     () => {
       callback(null, null);
     },
     err => {
-      logger.error("Error conecting to database.");
+      logger.error("Error connecting to database.");
       logger.error(err);
       callback(err);
     }
@@ -113,13 +114,15 @@ function createFloor(number, maxCapacity, buildingName, callback) {
         } else {
           logger.debug(build.floors);
 
-          const floor = new Floor({
-            number,
-            maxCapacity,
-            buildingId: build._id
+          build.floors.push({
+            number: number,
+            capacity: maxCapacity
           });
 
-          build.floors.push(floor);
+          logger.debug(typeof maxCapacity);
+          logger.debug(typeof build.max_capacity);
+
+          build.max_capacity = build.max_capacity + Number(maxCapacity);
 
           build.save((err, build) => {
             if (err) {
@@ -132,7 +135,7 @@ function createFloor(number, maxCapacity, buildingName, callback) {
       });
     },
     err => {
-      logger.error("Error conecting to database.");
+      logger.error("Error connecting to database.");
       logger.error(err);
       callback(err);
     }
