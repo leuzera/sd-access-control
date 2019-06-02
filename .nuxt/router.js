@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
-const _2acf3577 = () => interopDefault(import('../pages/inspire.vue' /* webpackChunkName: "pages/inspire" */))
+const _23b30e38 = () => interopDefault(import('../pages/builds.vue' /* webpackChunkName: "pages/builds" */))
+const _e7a37e72 = () => interopDefault(import('../pages/groups.vue' /* webpackChunkName: "pages/groups" */))
+const _384586e5 = () => interopDefault(import('../pages/users.vue' /* webpackChunkName: "pages/users" */))
 const _1a48a6a2 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 Vue.use(Router)
@@ -80,9 +82,17 @@ export function createRouter() {
     scrollBehavior,
 
     routes: [{
-      path: "/inspire",
-      component: _2acf3577,
-      name: "inspire"
+      path: "/builds",
+      component: _23b30e38,
+      name: "builds"
+    }, {
+      path: "/groups",
+      component: _e7a37e72,
+      name: "groups"
+    }, {
+      path: "/users",
+      component: _384586e5,
+      name: "users"
     }, {
       path: "/",
       component: _1a48a6a2,
