@@ -10,6 +10,7 @@ const RestServer = port => {
   const app = express();
 
   let whitelist = ["https://sd-access-control.netlify.com"];
+
   let corsOptions = {
     origin: function(origin, callback) {
       if (whitelist.indexOf(origin) !== -1) {
