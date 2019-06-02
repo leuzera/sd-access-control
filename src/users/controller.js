@@ -5,8 +5,8 @@ const logger = require("../logger");
 function createUser(req, res) {
   database.then(
     () => {
-      const { name, password, type, admin } = req.body;
-      const user = new UserModel({ name, password, type, admin });
+      const { name, password, group } = req.body;
+      const user = new UserModel({ name, password, group });
 
       user.save((err, user) => {
         if (!err) {
@@ -30,14 +30,16 @@ function createUser(req, res) {
 }
 
 function recoverAllUsers(_req, res) {
-  UserModel.find({}, (err, users) => {
-    if (err) {
-      logger.error(`Error retrieving users.\n${err}`);
-      res.status(500).send({ status: 500, error: err.errmsg });
-    } else {
-      res.status(200).send({ status: 200, users: users });
-    }
-  });
+  UserModel.find({})
+    .populate("group")
+    .exec((err, users) => {
+      if (err) {
+        logger.error(`Error retrieving users.\n${err}`);
+        res.status(500).send({ status: 500, error: err.errmsg });
+      } else {
+        res.status(200).send({ status: 200, users: users });
+      }
+    });
 }
 
 function deleteUser(req, res) {
@@ -60,26 +62,16 @@ function updateUser(req, res) {
 
 function recoverUser(req, res) {
   logger.debug(`Recovering user ${req.params.name}`);
-  UserModel.find({ name: req.params.name }, (err, user) => {
-    if (err) {
-      logger.error(`Error retrieving user.\n${err}`);
-      res.status(500).send({ status: 500, error: err.errmsg });
-    } else {
-      res.status(200).send({ status: 200, user: user[0] });
-    }
-  });
-}
-
-function findUserById(id) {
-  logger.debug(`Searching for user whith id: ${id}`);
-  UserModel.find({ _id: id }, (err, user) => {
-    if (err) {
-      logger.error(`${err}`);
-      return false;
-    } else {
-      return true;
-    }
-  });
+  UserModel.find({ name: req.params.name })
+    .populate("group")
+    .exec((err, user) => {
+      if (err) {
+        logger.error(`Error retrieving user.\n${err}`);
+        res.status(500).send({ status: 500, error: err.errmsg });
+      } else {
+        res.status(200).send({ status: 200, user: user[0] });
+      }
+    });
 }
 
 module.exports = {
