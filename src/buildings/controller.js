@@ -38,15 +38,17 @@ function createBuilding(name, group, callback) {
 function recoverAllBuildings(callback) {
   database.then(
     () => {
-      Building.find({}, (err, builds) => {
-        if (err) {
-          logger.error("Error retrieving buildings.");
-          logger.error(err);
-          callback(err);
-        } else {
-          callback(null, builds);
-        }
-      });
+      Building.find({})
+        .populate("groups")
+        .exec((err, builds) => {
+          if (err) {
+            logger.error("Error retrieving buildings.");
+            logger.error(err);
+            callback(err);
+          } else {
+            callback(null, builds);
+          }
+        });
     },
     err => {
       logger.error("Error connecting to database.");
@@ -128,6 +130,7 @@ function createFloor(number, maxCapacity, buildingName, group, callback) {
                 capacity: maxCapacity,
                 groups: group
               });
+
               build.max_capacity = build.max_capacity + Number(maxCapacity);
 
               build.save((err, build) => {
