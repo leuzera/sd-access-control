@@ -14,8 +14,8 @@ module.exports = router => {
       });
     })
     .post((req, res) => {
-      const { name } = req.body;
-      controller.createBuilding(name, (err, building) => {
+      const { name, group } = req.body;
+      controller.createBuilding(name, group, (err, building) => {
         if (!err) {
           res.status(201).send({ status: 201, building: building });
         } else {
@@ -53,8 +53,8 @@ module.exports = router => {
     });
 
   router.route("/building/:name/floors").post((req, res) => {
-    const { number, capacity } = req.body;
-    controller.createFloor(number, capacity, req.params.name, (err, build) => {
+    const { number, capacity, group } = req.body;
+    controller.createFloor(number, capacity, req.params.name, group, (err, build) => {
       if (err) {
         res.status(500).send({ status: 500, err: err.message });
       } else {

@@ -1,20 +1,29 @@
-const { Building, Floor } = require("./model");
+const { Building } = require("./model");
+const Group = require("../group/model");
 const database = require("../database");
 const logger = require("../logger");
 
-function createBuilding(name, callback) {
+function createBuilding(name, group, callback) {
   database.then(
     () => {
       const building = new Building({ name: name });
 
-      building.save((err, building) => {
+      Group.findOne({ name: group }, (err, group) => {
         if (err) {
           logger.error(err);
           callback(err);
         } else {
-          logger.info("Building added.");
-          logger.debug(building);
-          callback(null, building);
+          building.groups.push(group);
+          building.save((err, building) => {
+            if (err) {
+              logger.error(err);
+              callback(err);
+            } else {
+              logger.info("Building added.");
+              logger.debug(building);
+              callback(null, building);
+            }
+          });
         }
       });
     },
@@ -102,25 +111,32 @@ function updateBuilding(name, params, callback) {
   );
 }
 
-function createFloor(number, maxCapacity, buildingName, callback) {
+function createFloor(number, maxCapacity, buildingName, group, callback) {
   database.then(
     () => {
       Building.findOne({ name: buildingName }, (err, build) => {
         if (err) {
           callback(err);
         } else {
-          build.floors.addToSet({
-            number: number,
-            capacity: maxCapacity
-          });
-
-          build.max_capacity = build.max_capacity + Number(maxCapacity);
-
-          build.save((err, build) => {
+          Group.findOne({ name: group }, (err, group) => {
             if (err) {
+              logger.error(err);
               callback(err);
             } else {
-              callback(null, build);
+              build.floors.addToSet({
+                number: number,
+                capacity: maxCapacity,
+                groups: group
+              });
+              build.max_capacity = build.max_capacity + Number(maxCapacity);
+
+              build.save((err, build) => {
+                if (err) {
+                  callback(err);
+                } else {
+                  callback(null, build);
+                }
+              });
             }
           });
         }
