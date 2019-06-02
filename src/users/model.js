@@ -2,19 +2,14 @@ const Mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const logger = require("../logger");
 const config = require("../config");
+const Group = require("../group/model");
 
 const Schema = Mongoose.Schema;
 
 const userSchema = new Schema({
   name: { type: String, required: true, trim: true, unique: true },
   password: { type: String, required: true, trim: true },
-  type: {
-    type: String,
-    required: true,
-    trim: true,
-    enum: ["customer", "visitor", "employee"],
-    default: "visitor"
-  },
+  type: { type: Schema.Types.ObjectId, ref: "Group" },
   admin: { type: Boolean, required: true, default: false }
 });
 

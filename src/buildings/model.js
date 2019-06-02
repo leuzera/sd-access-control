@@ -5,7 +5,8 @@ const Schema = Mongoose.Schema;
 const floorsSchema = new Schema({
   number: { type: String, required: true },
   capacity: { type: Number, required: true, default: 0 },
-  occupancy: { type: Number, required: true, default: 0 }
+  occupancy: { type: Number, required: true, default: 0 },
+  groups: [{ type: Schema.Types.ObjectId, ref: "Group" }]
 });
 
 const buildingSchema = new Schema({

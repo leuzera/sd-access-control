@@ -26,7 +26,7 @@ function createGroup(name, permission, callback) {
   );
 }
 
-function recoverAllGroups(name, callback) {
+function recoverAllGroups(callback) {
   database.then(
     () => {
       Group.find({}, (err, groups) => {
@@ -40,14 +40,14 @@ function recoverAllGroups(name, callback) {
       });
     },
     err => {
-      logger.error("Error conecting to database.");
+      logger.error("Error connecting to database.");
       logger.error(err);
       callback(err);
     }
   );
 }
 
-function recoverGroup(callback) {
+function recoverGroup(name, callback) {
   database.then(
     () => {
       Group.find({ name: name }, (err, group) => {
@@ -68,7 +68,7 @@ function recoverGroup(callback) {
   );
 }
 
-function deleteGroup(callback) {
+function deleteGroup(name, callback) {
   database.then(
     () => {
       Group.findOneAndDelete({ name: name }, err => {
@@ -82,20 +82,20 @@ function deleteGroup(callback) {
       });
     },
     err => {
-      logger.error("Error conecting to database.");
+      logger.error("Error connecting to database.");
       logger.error(err);
       callback(err);
     }
   );
 }
 
-function updateGroup(permission, callback) {
+function updateGroupPermission(name, permission, callback) {
   database.then(
     () => {
       callback(null, null);
     },
     err => {
-      logger.error("Error conecting to database.");
+      logger.error("Error connecting to database.");
       logger.error(err);
       callback(err);
     }
@@ -107,5 +107,5 @@ module.exports = {
   recoverGroup,
   recoverAllGroups,
   deleteGroup,
-  updateGroup
+  updateGroupPermission
 };
