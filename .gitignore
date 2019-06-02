@@ -109,3 +109,5 @@ typings/
 
 ### Logs ###
 *.log
+
+dist/*
