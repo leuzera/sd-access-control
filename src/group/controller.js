@@ -1,11 +1,11 @@
-const { Group } = require("./model");
+const Group = require("./model");
 const database = require("../database");
 const logger = require("../logger");
 
 function createGroup(name, permission, callback) {
   database.then(
     () => {
-      const group = new Group({ name, permission });
+      const group = new Group({ name: name, permissions: permission });
 
       group.save((err, group) => {
         if (err) {

@@ -9,7 +9,7 @@ module.exports = router => {
         if (!err) {
           res.status(200).send({ status: 200, groups: groups });
         } else {
-          res.status(500).send({ status: 500 });
+          res.status(500).send({ status: 500, message: err.message });
         }
       });
     })
@@ -21,7 +21,7 @@ module.exports = router => {
         if (!err) {
           res.status(201).send({ status: 201, group: group });
         } else {
-          res.status(500).send({ status: 500 });
+          res.status(500).send({ status: 500, message: err.message });
         }
       });
     });
@@ -33,7 +33,7 @@ module.exports = router => {
         if (!err) {
           res.status(200).send({ status: 200, group: group[0] });
         } else {
-          res.status(500).send({ status: 500 });
+          res.status(500).send({ status: 500, message: err.message });
         }
       });
     })
