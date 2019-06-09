@@ -1,4 +1,5 @@
 const UserModel = require("./model");
+const Group = require("../group/model");
 const database = require("../database");
 const logger = require("../logger");
 
@@ -6,17 +7,27 @@ function createUser(req, res) {
   database.then(
     () => {
       const { name, password, group } = req.body;
-      const user = new UserModel({ name, password, group });
 
-      user.save((err, user) => {
-        if (!err) {
-          logger.debug(`New user: ${user}`);
+      const user = new UserModel({ name, password });
 
-          res.status(201).send({ status: 201, result: user });
+      Group.findOne({ name: group }, (err, group) => {
+        if (err) {
+          logger.error(err);
+          callback(err);
         } else {
-          logger.error("Error while saving user.");
-          logger.error(`${err}`);
-          res.status(500).send({ status: 500, error: err.errmsg });
+          user.group = group;
+
+          user.save((err, user) => {
+            if (!err) {
+              logger.debug(`New user: ${user}`);
+
+              res.status(201).send({ status: 201, result: user });
+            } else {
+              logger.error("Error while saving user.");
+              logger.error(`${err}`);
+              res.status(500).send({ status: 500, error: err.errmsg });
+            }
+          });
         }
       });
     },
