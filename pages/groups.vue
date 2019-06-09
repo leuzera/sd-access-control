@@ -1,9 +1,55 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6></v-flex>
+  <v-layout align-start justify-space-around row>
+    <v-flex xs12 sm8 md6>
+      <v-data-table :headers="headers" :items="groups" hide-actions>
+        <template v-slot:items="group">
+          <td>{{ group.item.name }}</td>
+          <td>{{ group.item.permissions }}</td>
+          <td class="justify-space-around layout px-0">
+            <v-icon small @click="editGroup(group.item)">mdi-pencil</v-icon>
+            <v-icon small @click="deleteGroup(group.item)">mdi-delete</v-icon>
+          </td>
+        </template>
+      </v-data-table>
+    </v-flex>
   </v-layout>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      headers: [
+        { text: "Grupo", value: "name" },
+        { text: "Permição", value: "permissions" },
+        { text: "", value: "name", sortable: false }
+      ],
+      groups: [],
+      errors: []
+    };
+  },
+  mounted() {
+    this.$axios
+      .get("/groups")
+      .then(res => {
+        this.groups = res.data.groups;
+      })
+      .catch(error => this.errors.push(error));
+  },
+  methods: {
+    editGroup(group) {
+      console.log("edit ", group);
+    },
+
+    deleteGroup(group) {
+      this.$axios
+        .delete("/group/" + group.name)
+        .then(() => {
+          const index = this.groups.indexOf(group);
+          this.groups.splice(index, 1);
+        })
+        .catch(error => this.errors.push(error));
+    }
+  }
+};
 </script>

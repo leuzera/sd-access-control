@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 import VuetifyLoaderPlugin from "vuetify-loader/lib/plugin";
 import pkg from "./package";
 
@@ -44,13 +46,15 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
-    "@nuxtjs/dotenv"
+    "@nuxtjs/dotenv",
+    "@nuxtjs/router"
   ],
   /*
    ** Axios module configuration
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    https: process.env.API_HTTPS
   },
 
   /*
