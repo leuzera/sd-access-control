@@ -20,7 +20,7 @@ const RestServer = port => {
   app.use(cors());
   app.options("*", cors());
   app.use(morgan("combined"));
-  app.use("/api/v1", routes);
+  app.use("/v1", routes);
 
   app.listen(`${port}`, () => {
     logger.info(`API Server started at port ${port}`);
