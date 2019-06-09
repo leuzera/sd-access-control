@@ -110,4 +110,4 @@ typings/
 ### Logs ###
 *.log
 
-dist/*
+dist/
