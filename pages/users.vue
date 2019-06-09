@@ -1,6 +1,10 @@
 <template>
-  <v-layout align-start justify-space-around row>
-    <v-flex xs12 sm8 md6>
+  <v-flex>
+    <v-toolbar flat>
+      <v-toolbar-title>{{ $nuxt.$route.name }}</v-toolbar-title>
+      <v-divider class="mx-2" inset vertical></v-divider>
+    </v-toolbar>
+    <v-layout align-start justify-space-around row>
       <v-data-table :headers="headers" :items="users" hide-actions>
         <template v-slot:items="user">
           <td>{{ user.item.name }}</td>
@@ -11,12 +15,15 @@
           </td>
         </template>
       </v-data-table>
-    </v-flex>
-  </v-layout>
+    </v-layout>
+  </v-flex>
 </template>
 
 <script>
 export default {
+  head: {
+    title: "Usuários"
+  },
   data() {
     return {
       headers: [

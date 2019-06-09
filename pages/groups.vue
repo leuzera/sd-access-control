@@ -1,6 +1,10 @@
 <template>
-  <v-layout align-start justify-space-around row>
-    <v-flex xs12 sm8 md6>
+  <v-flex>
+    <v-toolbar flat>
+      <v-toolbar-title>{{ $nuxt.$route.name }}</v-toolbar-title>
+      <v-divider class="mx-2" inset vertical></v-divider>
+    </v-toolbar>
+    <v-layout align-start justify-space-around row>
       <v-data-table :headers="headers" :items="groups" hide-actions>
         <template v-slot:items="group">
           <td>{{ group.item.name }}</td>
@@ -11,12 +15,15 @@
           </td>
         </template>
       </v-data-table>
-    </v-flex>
-  </v-layout>
+    </v-layout>
+  </v-flex>
 </template>
 
 <script>
 export default {
+  head: {
+    title: "Grupos"
+  },
   data() {
     return {
       headers: [
@@ -25,7 +32,7 @@ export default {
         { text: "", value: "name", sortable: false }
       ],
       groups: [],
-      errors: []
+      error: ""
     };
   },
   mounted() {
@@ -34,7 +41,9 @@ export default {
       .then(res => {
         this.groups = res.data.groups;
       })
-      .catch(error => this.errors.push(error));
+      .catch(error => {
+        this.error = error;
+      });
   },
   methods: {
     editGroup(group) {
@@ -48,7 +57,9 @@ export default {
           const index = this.groups.indexOf(group);
           this.groups.splice(index, 1);
         })
-        .catch(error => this.errors.push(error));
+        .catch(error => {
+          this.error = error;
+        });
     }
   }
 };

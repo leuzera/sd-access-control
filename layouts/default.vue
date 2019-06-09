@@ -11,10 +11,6 @@
       </v-btn>
     </v-toolbar>
     <v-content>
-      <v-toolbar flat>
-        <v-toolbar-title>{{ $nuxt.$route.name }}</v-toolbar-title>
-        <v-divider class="mx-2" inset vertical></v-divider>
-      </v-toolbar>
       <v-container>
         <nuxt/>
       </v-container>
