@@ -4,6 +4,8 @@
 
 These server has two interfaces, one for a REST API and one for a gRPC API.
 
+> The Admin Panel can be found at [website branch](/leuzera/sd-access-control/tree/website)
+
 ## Build Setup
 
 ```bash
