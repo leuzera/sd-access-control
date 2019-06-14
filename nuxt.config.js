@@ -58,6 +58,10 @@ export default {
     https: process.env.API_HTTPS
   },
 
+  generate: {
+    routes: ["/"]
+  },
+
   /*
    ** Build configuration
    */
