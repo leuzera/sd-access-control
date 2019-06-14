@@ -37,3 +37,7 @@ API_HTTPS=false
 `API_HTTPS` defines the use of HTTPS.
 
 On Linux, these option can also be set with environment variables.
+
+## Deploying
+
+To deploy this site on [Netlify](https://www.netlify.com), select the `website` branch. Other configuration can be found at `netlify.toml`.
