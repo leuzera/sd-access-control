@@ -37,3 +37,11 @@ SALTING_ROUNDS = 10
 `SALTING_ROUNDS` is used to criptografy the user password.
 
 On Linux, these option can also be set with environment variables.
+
+## Depolying
+
+> PM2 Runtime is a Production Process Manager for Node.js applications with a built-in Load Balancer. It allows you to keep applications alive forever, to reload them without downtime and facilitate common Devops tasks.
+
+You can use PM2 do deploy and manage this server. For more information see [PM2 documentation](https://pm2.io/doc/en/runtime/overview/).
+
+The deploy configuration can be found at `ecosystem.config.js`. See the [Ecosystem File Reference](https://pm2.io/doc/en/runtime/reference/ecosystem-file/) for more information on the options.

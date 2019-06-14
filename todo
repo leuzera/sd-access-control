@@ -1,12 +1,12 @@
 - Always read https://github.com/i0natan/nodebestpractices
 
-[] Update README.md
-[] Use PM2 (http://pm2.keymetrics.io/) to automatically reload server on errors
+[x] Update README.md
+[x] Use PM2 (http://pm2.keymetrics.io/) to automatically reload server on errors
 [x] Use a log library, like winston (https://github.com/winstonjs/winston)
-[] Follow express best pratices:
+[ ] Follow express best pratices:
     https://expressjs.com/en/advanced/best-practice-performance.html
     https://expressjs.com/en/advanced/best-practice-security.html
     https://expressjs.com/en/advanced/healthcheck-graceful-shutdown.html
 
-[] Athenticate user before api use
-[] Add user permissions
+[ ] Athenticate user before api use
+[ ] Add user permissions
