@@ -1,6 +1,6 @@
-# access-control
+# Access Control Admin Panel
 
-> Admin panel to Access Control
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/leuzera/sd-access-control)
 
 ## Build Setup
 
@@ -37,7 +37,3 @@ API_HTTPS=false
 `API_HTTPS` defines the use of HTTPS.
 
 On Linux, these option can also be set with environment variables.
-
-## Deploying
-
-To deploy this site on [Netlify](https://www.netlify.com), select the `website` branch. Other configuration can be found at `netlify.toml`.

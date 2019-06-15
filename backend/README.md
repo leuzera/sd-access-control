@@ -1,10 +1,8 @@
-# sd-access-control
+# Access Control API Server
 
 > API server to Access Control
 
 These server has two interfaces, one for a REST API and one for a gRPC API.
-
-> The Admin Panel can be found at [website branch](/leuzera/sd-access-control/tree/website)
 
 ## Build Setup
 
@@ -37,21 +35,3 @@ SALTING_ROUNDS = 10
 `SALTING_ROUNDS` is used to criptografy the user password.
 
 On Linux, these option can also be set with environment variables.
-
-## Depolying
-
-> PM2 Runtime is a Production Process Manager for Node.js applications with a built-in Load Balancer. It allows you to keep applications alive forever, to reload them without downtime and facilitate common Devops tasks.
-
-You can use PM2 do deploy and manage this server.
-
-```bash
-# Setup deployment at remote location
-pm2 deploy production setup
-
-# Update remote version
-pm2 deploy production update
-```
-
-For more information see [PM2 deploy guide](https://pm2.io/doc/en/runtime/guide/easy-deploy-with-ssh/).
-
-The deploy configuration can be found at `ecosystem.config.js`. See the [Ecosystem File Reference](https://pm2.io/doc/en/runtime/reference/ecosystem-file/) for more information on the options.
