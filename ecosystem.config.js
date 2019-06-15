@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "API",
-      script: "./frontend/app.js",
+      script: "./backend/app.js",
 
       // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
       instances: 1,
