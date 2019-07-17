@@ -1,3 +1,4 @@
+const logger = require("../logger");
 const userController = require("./controller");
 const express = require("express");
 let router = express.Router();
@@ -52,10 +53,10 @@ router
   })
   .patch((req, res) => {
     const username = req.params.username;
-    if (!("password" in req.body) && !("rule" in req.body)) {
+    if (!("password" in req.body) && !("role" in req.body)) {
       res.status(500).send({ status: 500, message: "No `password` or `rule` found." });
     }
-    if ("password" in req.body && "rule" in req.body) {
+    if ("password" in req.body && "role" in req.body) {
       res
         .status(500)
         .send({ status: 500, message: "Both `password` and `rule` was send. Use only one." });
@@ -72,9 +73,9 @@ router
         }
       });
     }
-    if ("rule" in req.body) {
-      const rule = req.body;
-      userController.changeUserRole(username, rule, (err, user) => {
+    if ("role" in req.body) {
+      const { role } = req.body;
+      userController.changeUserRole(username, role.toUpperCase(), (err, user) => {
         if (err) {
           res.status(500).send({ status: 500, message: err.message });
         } else {

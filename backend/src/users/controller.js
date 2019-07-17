@@ -37,7 +37,12 @@ function recoverAllUsers(callback) {
           logger.error(err);
           callback(err);
         } else {
-          callback(null, users);
+          if (users === null || users.length === 0) {
+            error = { name: "UserNotFound", message: "User not found.", level: "error" };
+            callback(error);
+          } else {
+            callback(null, users);
+          }
         }
       });
     },
@@ -54,11 +59,16 @@ function recoverUser(username, callback) {
     () => {
       User.find({ username: username }, "username role", (err, user) => {
         if (err) {
-          logger.error("Error retrieving users.");
+          logger.error("Error retrieving user.");
           logger.error(err);
           callback(err);
         } else {
-          callback(null, user);
+          if (user === null) {
+            error = { name: "UserNotFound", message: "User not found.", level: "error" };
+            callback(error);
+          } else {
+            callback(null, { username: user.username, role: user.role });
+          }
         }
       });
     },
@@ -79,7 +89,12 @@ function deleteUser(username, callback) {
           logger.error(err);
           callback(err);
         } else {
-          callback(null, true);
+          if (user === null) {
+            error = { name: "UserNotFound", message: "User not found.", level: "error" };
+            callback(error);
+          } else {
+            callback(null, true);
+          }
         }
       });
     },
@@ -95,15 +110,25 @@ function changeUserPassword(username, oldPassword, newPassword, callback) {
   database.then(
     () => {
       // TODO: compare oldPassword with actual user.password before changing password
-      User.findOneAndUpdate({ username: username }, { password: newPassword }, (err, user) => {
-        if (err) {
-          logger.error("Error updating user role.");
-          logger.error(err);
-          callback(err);
-        } else {
-          callback(null, { username: user.username, role: user.role });
+      User.findOneAndUpdate(
+        { username: username },
+        { password: newPassword },
+        { useFindAndModify: false, new: true },
+        (err, user) => {
+          if (err) {
+            logger.error("Error updating user role.");
+            logger.error(err);
+            callback(err);
+          } else {
+            if (user === null) {
+              error = { name: "UserNotFound", message: "User not found.", level: "error" };
+              callback(error);
+            } else {
+              callback(null, { username: user.username, role: user.role });
+            }
+          }
         }
-      });
+      );
     },
     err => {
       logger.error("Error connecting to database.");
@@ -116,15 +141,25 @@ function changeUserPassword(username, oldPassword, newPassword, callback) {
 function changeUserRole(username, newRole, callback) {
   database.then(
     () => {
-      User.findOneAndUpdate({ username: username }, { role: newRole }, (err, user) => {
-        if (err) {
-          logger.error("Error updating user role.");
-          logger.error(err);
-          callback(err);
-        } else {
-          callback(null, { username: user.username, role: user.role });
+      User.findOneAndUpdate(
+        { username: username },
+        { role: newRole.toUpperCase() },
+        { useFindAndModify: false, new: true },
+        (err, user) => {
+          if (err) {
+            logger.error("Error updating user role.");
+            logger.error(err);
+            callback(err);
+          } else {
+            if (user === null) {
+              error = { name: "UserNotFound", message: "User not found.", level: "error" };
+              callback(error);
+            } else {
+              callback(null, { username: user.username, role: user.role });
+            }
+          }
         }
-      });
+      );
     },
     err => {
       logger.error("Error connecting to database.");
@@ -140,14 +175,19 @@ function upsertUser(username, password, role, callback) {
       User.findOneAndUpdate(
         { username: username },
         { username, password, role },
-        { upsert: true },
+        { useFindAndModify: false, new: true },
         (err, user) => {
           if (err) {
             logger.error("Error updating user.");
             logger.error(err);
             callback(err);
           } else {
-            callback(null, { username: user.username, role: user.role });
+            if (user === null) {
+              error = { name: "UserNotFound", message: "User not found.", level: "error" };
+              callback(error);
+            } else {
+              callback(null, { username: user.username, role: user.role });
+            }
           }
         }
       );

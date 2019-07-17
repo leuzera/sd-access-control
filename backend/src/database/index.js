@@ -3,7 +3,7 @@ const logger = require("../logger");
 const config = require("../config");
 
 const database = dbName => {
-  Mongoose.connect(
+  return Mongoose.connect(
     config.mongo_uri,
     { useNewUrlParser: true, useCreateIndex: true, autoIndex: false, dbName: dbName },
     err => {
