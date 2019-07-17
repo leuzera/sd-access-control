@@ -1,14 +1,10 @@
+const builds = require("../builds");
+const auth = require("../auth");
 const users = require("../users");
-const buildings = require("../buildings");
-const groups = require("../group");
+let router = express.Router();
 
-module.exports = router => {
-  router.route("/").get((_req, res) => {
-    res.status(418).send({ message: "I am a Teapot." });
-  });
-  users(router);
-  buildings(router);
-  groups(router);
+router.use("/builds", builds);
+router.use("/auth", auth);
+router.use("/", users);
 
-  return router;
-};
+module.exports = router;

@@ -2,14 +2,13 @@ const Mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const logger = require("../logger");
 const config = require("../config");
-const Group = require("../group/model");
 
 const Schema = Mongoose.Schema;
 
 const userSchema = new Schema({
-  name: { type: String, required: true, trim: true, unique: true },
+  username: { type: String, required: true, trim: true, unique: true },
   password: { type: String, required: true, trim: true },
-  group: { type: Schema.Types.ObjectId, ref: "Group" }
+  role: { type: String, enum: ["ADMIN", "MANAGER", "CLERK"], required: true, default: "CLERK" }
 });
 
 userSchema.pre("save", function(next) {

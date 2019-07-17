@@ -1,5 +1,5 @@
 const Group = require("./model");
-const database = require("../database");
+const database = require("../../database")("builds");
 const logger = require("../logger");
 
 function createGroup(name, permission, callback) {

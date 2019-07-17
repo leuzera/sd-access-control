@@ -1,7 +1,7 @@
 const { Building } = require("./model");
 const Group = require("../group/model");
-const database = require("../database");
-const logger = require("../logger");
+const database = require("../../database")("builds");
+const logger = require("../../logger");
 
 function createBuilding(name, group, callback) {
   database.then(
