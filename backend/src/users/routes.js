@@ -1,4 +1,5 @@
 const userController = require("./controller");
+const express = require("express");
 let router = express.Router();
 
 router
@@ -94,4 +95,4 @@ router
     });
   });
 
-module.exports = User;
+module.exports = router;

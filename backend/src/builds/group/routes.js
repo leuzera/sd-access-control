@@ -1,5 +1,6 @@
 const controller = require("./controller");
-const logger = require("../logger");
+const logger = require("../../logger");
+const express = require("express");
 let router = express.Router();
 
 router

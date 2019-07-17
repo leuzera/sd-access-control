@@ -1,10 +1,11 @@
 const buildings = require("./buildings");
 const groups = require("./group");
 const people = require("./people");
+const express = require("express");
 let router = express.Router();
 
-route.use("/", buildings);
-route.use("/", groups);
-route.use("/", people);
+router.use("/", buildings);
+router.use("/", groups);
+router.use("/", people);
 
 module.exports = router;

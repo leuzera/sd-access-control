@@ -7,6 +7,6 @@ const userSchema = new Schema({
   group: { type: Schema.Types.ObjectId, ref: "Group" }
 });
 
-const User = Mongoose.model("User", userSchema);
+const People = Mongoose.model("People", userSchema);
 
-module.exports = User;
+module.exports = People;
