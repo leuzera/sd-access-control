@@ -1,3 +1,4 @@
+const validadeToken = require("../../auth/controller").validadeToken;
 const controller = require("./controller");
 const logger = require("../../logger");
 const express = require("express");
@@ -5,7 +6,7 @@ let router = express.Router();
 
 router
   .route("/buildings")
-  .get((_req, res) => {
+  .get(validadeToken, (_req, res) => {
     controller.recoverAllBuildings((err, buildings) => {
       if (!err) {
         res.status(200).send({ status: 200, buildings: buildings });
@@ -27,7 +28,7 @@ router
 
 router
   .route("/building/:name")
-  .get((req, res) => {
+  .get(validadeToken, (req, res) => {
     controller.recoverBuilding(req.params.name, (err, building) => {
       if (!err) {
         res.status(200).send({ status: 200, building: building[0] });
@@ -36,10 +37,10 @@ router
       }
     });
   })
-  .put((req, res) => {
+  .put(validadeToken, (req, res) => {
     res.status(501).send({ status: 501, message: "Not implemented" });
   })
-  .delete((req, res) => {
+  .delete(validadeToken, (req, res) => {
     controller.deleteBuilding(req.params.name, (err, result) => {
       if (!err) {
         logger.debug("Not error.");
@@ -53,7 +54,7 @@ router
     });
   });
 
-router.route("/building/:name/floors").post((req, res) => {
+router.route("/building/:name/floors").post(validadeToken, (req, res) => {
   const { number, capacity, group } = req.body;
   controller.createFloor(number, capacity, req.params.name, group, (err, build) => {
     if (err) {
@@ -66,7 +67,7 @@ router.route("/building/:name/floors").post((req, res) => {
 
 router
   .route("/building/:name/floor/:id")
-  .put((req, res) => {
+  .put(validadeToken, (req, res) => {
     controller.updateFloorCapacity(
       req.params.name,
       req.params.id,
@@ -80,7 +81,7 @@ router
       }
     );
   })
-  .delete((req, res) => {
+  .delete(validadeToken, (req, res) => {
     controller.deleteFloor(req.params.name, req.params.id, (err, result) => {
       if (!err) {
         if (result) {

@@ -1,5 +1,6 @@
 require("dotenv").config();
 const convict = require("convict");
+const logger = require("../logger");
 
 const config = convict({
   env: {
@@ -36,14 +37,38 @@ const config = convict({
     default: 10,
     env: "SALTING_ROUNDS",
     arg: "salting_rounds"
+  },
+  jwt_secret: {
+    doc: "Salting rounds for the cryptography algorithm",
+    format: "*",
+    default: "",
+    sensitive: true,
+    env: "JWT_SECRET",
+    arg: "jwt_secret"
+  },
+  jwt_issuer: {
+    doc: "Salting rounds for the cryptography algorithm",
+    format: "url",
+    default: "http://www.example.com",
+    env: "JWT_ISSUER",
+    arg: "jwt_issuer"
+  },
+  jwt_expires_in: {
+    doc: "Salting rounds for the cryptography algorithm",
+    format: "*",
+    default: "2d",
+    env: "JWT_EXPIRES_IN",
+    arg: "jwt_expires_in"
   }
 });
 
 // Load environment dependent configuration
-var env = config.get("env");
-config.loadFile(`./src/config/${env}.json`);
+// var env = config.get("env");
+// config.loadFile(`./src/config/${env}.json`);
 
 // Perform validation
 config.validate({ allowed: "strict" });
+
+logger.debug(config.toString());
 
 module.exports = config.getProperties();

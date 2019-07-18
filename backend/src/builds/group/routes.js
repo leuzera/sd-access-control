@@ -1,3 +1,4 @@
+const validadeToken = require("../../auth/controller").validadeToken;
 const controller = require("./controller");
 const logger = require("../../logger");
 const express = require("express");
@@ -5,7 +6,7 @@ let router = express.Router();
 
 router
   .route("/groups")
-  .get((_req, res) => {
+  .get(validadeToken, (_req, res) => {
     controller.recoverAllGroups((err, groups) => {
       if (!err) {
         res.status(200).send({ status: 200, groups: groups });
@@ -14,7 +15,7 @@ router
       }
     });
   })
-  .post((req, res) => {
+  .post(validadeToken, (req, res) => {
     const { name, permission } = req.body;
     controller.createGroup(name, permission, (err, group) => {
       logger.debug(group);
@@ -29,7 +30,7 @@ router
 
 router
   .route("/group/:name")
-  .get((req, res) => {
+  .get(validadeToken, (req, res) => {
     controller.recovergroup(req.params.name, (err, group) => {
       if (!err) {
         res.status(200).send({ status: 200, group: group[0] });
@@ -38,10 +39,10 @@ router
       }
     });
   })
-  .put((req, res) => {
+  .put(validadeToken, (req, res) => {
     res.status(501).send({ status: 501, message: "Not implemented" });
   })
-  .delete((req, res) => {
+  .delete(validadeToken, (req, res) => {
     res.status(501).send({ status: 501, message: "Not implemented" });
   });
 

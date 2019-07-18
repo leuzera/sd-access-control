@@ -1,3 +1,4 @@
+const validadeToken = require("../auth/controller").validadeToken;
 const logger = require("../logger");
 const userController = require("./controller");
 const express = require("express");
@@ -5,7 +6,7 @@ let router = express.Router();
 
 router
   .route("/users")
-  .get((_req, res) => {
+  .get(validadeToken, (_req, res) => {
     userController.recoverAllUsers((err, users) => {
       if (err) {
         res.status(500).send({ status: 500, message: err.message });
@@ -14,7 +15,7 @@ router
       }
     });
   })
-  .post((req, res) => {
+  .post(validadeToken, (req, res) => {
     const { username, password, role } = req.body;
 
     userController.createUser(username, password, role, (err, user) => {
@@ -28,7 +29,7 @@ router
 
 router
   .route("/user/:username")
-  .get((req, res) => {
+  .get(validadeToken, (req, res) => {
     const username = req.params.username;
 
     userController.recoverUser(username, (err, user) => {
@@ -39,7 +40,7 @@ router
       }
     });
   })
-  .put((req, res) => {
+  .put(validadeToken, (req, res) => {
     const username = req.params.username;
     const { password, role } = req.body;
 
@@ -51,7 +52,7 @@ router
       }
     });
   })
-  .patch((req, res) => {
+  .patch(validadeToken, (req, res) => {
     const username = req.params.username;
     if (!("password" in req.body) && !("role" in req.body)) {
       res.status(500).send({ status: 500, message: "No `password` or `rule` found." });
@@ -84,7 +85,7 @@ router
       });
     }
   })
-  .delete((req, res) => {
+  .delete(validadeToken, (req, res) => {
     const username = req.params.username;
 
     userController.deleteUser(username, (err, deleted) => {
