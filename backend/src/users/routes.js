@@ -27,6 +27,21 @@ router
     });
   });
 
+router.route("/user").get(validadeToken, (req, res) => {
+  const username = req.decoded.user;
+
+  logger.debug(JSON.stringify(req.decoded));
+  logger.debug(`Loging with only token. user: ${username}`);
+
+  userController.recoverUser(username, (err, user) => {
+    if (err) {
+      res.status(500).send({ status: 500, message: err.message });
+    } else {
+      res.status(200).send({ status: 200, user: user });
+    }
+  });
+});
+
 router
   .route("/user/:username")
   .get(validadeToken, (req, res) => {

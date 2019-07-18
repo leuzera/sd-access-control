@@ -10,10 +10,10 @@ function authenticateUser(username, password, callback) {
       if (err) {
         logger.debug("Error finding user.");
         logger.error(`${err}`);
-        callback({ message: "Wrong password or username. 1" });
+        callback({ message: "Wrong password or username." });
       } else if (!user) {
         logger.debug("No user found.");
-        callback({ message: "Wrong password or username. 2" });
+        callback({ message: "Wrong password or username." });
       } else {
         user.comparePassword(password, (err, match) => {
           if (err) {
@@ -34,7 +34,7 @@ function authenticateUser(username, password, callback) {
               callback(null, token);
             } else {
               logger.debug("User password don't match.");
-              callback({ message: "Wrong password or username. 3" });
+              callback({ message: "Wrong password or username." });
             }
           }
         });

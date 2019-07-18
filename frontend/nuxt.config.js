@@ -48,7 +48,8 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
-    "@nuxtjs/router"
+    "@nuxtjs/router",
+    "@nuxtjs/auth"
   ],
   /*
    ** Axios module configuration
@@ -56,6 +57,18 @@ export default {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     https: process.env.API_HTTPS
+  },
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: "/auth", method: "post", propertyName: "token" },
+          logout: false,
+          user: { url: "/user", method: "get", propertyName: "user" }
+        }
+      }
+    }
   },
 
   generate: {

@@ -93,6 +93,7 @@
 import querystring from "querystring";
 
 export default {
+  middleware: ["auth"],
   head: {
     title: "Prédios"
   },
@@ -136,7 +137,7 @@ export default {
   },
   mounted() {
     this.$axios
-      .get("/buildings")
+      .get("/builds/buildings")
       .then(res => {
         this.buildings = res.data.buildings;
       })
@@ -151,7 +152,7 @@ export default {
 
     deleteBuild(build) {
       this.$axios
-        .delete("/building/" + build.name)
+        .delete("/builds/building/" + build.name)
         .then(() => {
           const index = this.buildings.indexOf(build);
           this.buildings.splice(index, 1);
@@ -161,7 +162,7 @@ export default {
 
     saveBuild() {
       this.$axios
-        .post("/buildings", querystring.stringify(this.editedBuild))
+        .post("/builds/buildings", querystring.stringify(this.editedBuild))
         .then(() => {
           if (this.buildIndex > -1) {
             Object.assign(this.buildings[this.buildIndex], this.editedBuild);
