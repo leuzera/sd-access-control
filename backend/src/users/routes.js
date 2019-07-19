@@ -27,6 +27,22 @@ router
     });
   });
 
+router.route("/welcome").post((req, res) => {
+  const { username, password } = req.body;
+
+  if (userController.hasAdmin()) {
+    res.status(500).send({ status: 500, message: "Already has an Admin User." });
+  } else {
+    userController.createUser(username, password, "ADMIN", (err, user) => {
+      if (err) {
+        res.status(500).send({ status: 500, message: err.message });
+      } else {
+        res.status(200).send({ status: 200, user: user });
+      }
+    });
+  }
+});
+
 router.route("/user").get(validadeToken, (req, res) => {
   const username = req.decoded.user;
 

@@ -2,6 +2,29 @@ const User = require("./model");
 const database = require("../database")("users");
 const logger = require("../logger");
 
+function hasAdmin() {
+  database.then(
+    () => {
+      User.find({ role: "ADMIN" }, (err, users) => {
+        if (err) {
+          logger.error("Error retrieving users.");
+          logger.error(err);
+        } else {
+          if (users === null || users.length === 0) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+      });
+    },
+    err => {
+      logger.error("Error connecting to database.");
+      logger.error(err);
+    }
+  );
+}
+
 function createUser(username, password, role, callback) {
   database.then(
     () => {
@@ -207,5 +230,6 @@ module.exports = {
   deleteUser,
   changeUserPassword,
   changeUserRole,
-  upsertUser
+  upsertUser,
+  hasAdmin
 };
