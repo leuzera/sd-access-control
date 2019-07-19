@@ -19,7 +19,6 @@
               <v-layout wrap>
                 <v-flex xs12 sm6 md4>
                   <v-text-field v-model="edited.name" label="Nome"></v-text-field>
-                  <v-text-field v-model="edited.password" label="Senha"></v-text-field>
                   <v-text-field v-model="edited.group" label="Grupo"></v-text-field>
                 </v-flex>
               </v-layout>
@@ -68,7 +67,6 @@ export default {
       editedIndex: -1,
       edited: {
         name: "",
-        password: "",
         group: ""
       },
       default: {
