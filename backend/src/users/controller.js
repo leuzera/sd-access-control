@@ -9,6 +9,7 @@ function hasAdmin() {
         if (err) {
           logger.error("Error retrieving users.");
           logger.error(err);
+          throw new Error("Error checking for ADMIN.");
         } else {
           if (users === null || users.length === 0) {
             return false;
@@ -21,6 +22,7 @@ function hasAdmin() {
     err => {
       logger.error("Error connecting to database.");
       logger.error(err);
+      throw new Error("Error connecting to database.");
     }
   );
 }
