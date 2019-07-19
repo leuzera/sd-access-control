@@ -40,9 +40,6 @@ export default {
   },
   methods: {
     async login() {
-      console.log(this.username);
-      console.log(this.password);
-
       this.error = null;
       return this.$auth
         .loginWith("local", {
