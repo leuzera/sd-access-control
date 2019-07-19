@@ -80,7 +80,7 @@ function recoverAllUsers(callback) {
 function recoverUser(username, callback) {
   database.then(
     () => {
-      User.find({ username: username }, "username role", (err, user) => {
+      User.findOne({ username: username }, "username role", (err, user) => {
         if (err) {
           logger.error("Error retrieving user.");
           logger.error(err);
