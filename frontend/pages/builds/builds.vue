@@ -118,12 +118,12 @@ export default {
       floorDialog: false,
       floorIndex: -1,
       editedFloor: {
-        name: "",
+        number: 0,
         group: "",
         capacity: 0
       },
       defaultFloor: {
-        name: "",
+        name: 0,
         group: "",
         capacity: 0
       },
