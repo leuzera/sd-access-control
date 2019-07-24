@@ -175,14 +175,32 @@ export default {
     },
 
     createFloor() {
+      // POST /building/:name/floors
       console.log("create floor");
+
+      this.$axios
+        .post(
+          "/builds/building/" + build.name + "/floors",
+          querystring.stringify(this.editFloor)
+        )
+        .then(() => {
+          if (this.buildIndex > -1) {
+            Object.assign(this.buildings[this.buildIndex], this.editedBuild);
+          } else {
+            this.buildings.push(this.editedBuild);
+          }
+          this.close();
+        })
+        .catch(error => this.errors.push(error));
     },
 
     editFloor(floor) {
+      // PUT /building/:name/floor/:id
       console.log("edit ", floor);
     },
 
     deleteFloor(floor) {
+      // DELETE /building/:name/floor/:id
       console.log("delete ", floor);
     },
 
