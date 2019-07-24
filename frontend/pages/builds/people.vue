@@ -88,7 +88,7 @@ export default {
   methods: {
     saveUser() {
       this.$axios
-        .post("/users", querystring.stringify(this.edited))
+        .post("/builds/people", querystring.stringify(this.edited))
         .then(res => {
           if (this.editedIndex > -1) {
             Object.assign(this.users[this.editedIndex], this.edited);
@@ -106,7 +106,7 @@ export default {
 
     deleteUser(user) {
       this.$axios
-        .delete("/user/" + user.name)
+        .delete("/builds/people/" + user.name)
         .then(() => {
           const index = this.users.indexOf(user);
           this.users.splice(index, 1);
