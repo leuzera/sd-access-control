@@ -184,10 +184,13 @@ export default {
           querystring.stringify(this.editedFloor)
         )
         .then(() => {
-          if (this.buildIndex > -1) {
-            Object.assign(this.buildings[this.buildIndex], this.editedBuild);
+          if (this.floorIndex > -1) {
+            Object.assign(
+              this.buildings[this.buildIndex].floor[this.floorIndex],
+              this.editedFloor
+            );
           } else {
-            this.buildings.push(this.editedBuild);
+            this.buildings[this.buildIndex].floor.push(this.editedFloor);
           }
         })
         .catch(error => this.errors.push(error));
