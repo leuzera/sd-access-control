@@ -76,7 +76,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn flat @click="close">Cancelar</v-btn>
-                  <v-btn flat @click="createFloor">Salvar</v-btn>
+                  <v-btn flat @click="createFloor(build)">Salvar</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -174,7 +174,7 @@ export default {
         .catch(error => this.errors.push(error));
     },
 
-    createFloor() {
+    createFloor(build) {
       // POST /building/:name/floors
       console.log("create floor");
 
