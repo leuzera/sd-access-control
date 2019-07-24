@@ -176,6 +176,8 @@ export default {
 
     createFloor(build) {
       // POST /building/:name/floors
+      console.log(querystring.stringify(this.editFloor));
+
       this.$axios
         .post(
           "/builds/building/" + build.name + "/floors",
