@@ -56,7 +56,8 @@ router
 
 router.route("/building/:name/floors").post(validadeToken, (req, res) => {
   const { number, capacity, group } = req.body;
-  controller.createFloor(Number(number), Number(capacity), req.params.name, group, (err, build) => {
+  logger.error(number, capacity, req.params.name, group);
+  controller.createFloor(number, capacity, req.params.name, group, (err, build) => {
     if (err) {
       res.status(500).send({ status: 500, err: err.message });
     } else {
