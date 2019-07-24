@@ -181,7 +181,7 @@ export default {
       this.$axios
         .post(
           "/builds/building/" + build.name + "/floors",
-          querystring.stringify(this.editFloor)
+          querystring.stringify(this.editedFloor)
         )
         .then(() => {
           if (this.buildIndex > -1) {
