@@ -5,6 +5,7 @@ import Login from "~/pages/login.vue";
 import Builds from "~/pages/builds/builds.vue";
 import Groups from "~/pages/builds/groups.vue";
 import Users from "~/pages/builds/people.vue";
+import Home from "~/pages/index.vue";
 
 Vue.use(Router);
 
@@ -13,6 +14,12 @@ export function createRouter() {
     mode: "history",
 
     routes: [
+      {
+        path: "/",
+        component: Home,
+        name: "Home",
+        beforeEnter: ""
+      },
       {
         path: "/builds",
         component: Builds,
