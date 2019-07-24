@@ -176,9 +176,7 @@ export default {
 
     createFloor(build) {
       // POST /building/:name/floors
-      console.log("create floor");
-
-      this.$axios
+      his.$axios
         .post(
           "/builds/building/" + build.name + "/floors",
           querystring.stringify(this.editFloor)
@@ -206,9 +204,14 @@ export default {
 
     close() {
       this.buildDialog = false;
+      this.floorDialog = false;
+
       setTimeout(() => {
         this.editedBuild = Object.assign({}, this.defaultBuild);
         this.buildIndex = -1;
+
+        this.editFloor = Object.assign({}, this.defaultBuild);
+        this.floorIndex = -1;
       }, 300);
     }
   }
