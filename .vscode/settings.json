@@ -1,12 +1,14 @@
 {
   "spellright.language": [
-    "en_US"
+    "en_US",
+    "pt_BR"
   ],
   "spellright.documentTypes": [
     "markdown",
     "latex",
     "plaintext",
     "javascript",
-    "html"
+    "html",
+    "vue"
   ]
 }

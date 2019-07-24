@@ -66,7 +66,7 @@
                   <v-container grid-list-md>
                     <v-layout wrap>
                       <v-flex xs12 sm6 md4>
-                        <v-text-field v-model="editedFloor.name" label="Nome"></v-text-field>
+                        <v-text-field v-model="editedFloor.number" label="Numero"></v-text-field>
                         <v-text-field v-model="editedFloor.capacity" label="Capacidade"></v-text-field>
                         <v-text-field v-model="editedFloor.group" label="Grupo"></v-text-field>
                       </v-flex>
