@@ -123,7 +123,7 @@ export default {
         capacity: 0
       },
       defaultFloor: {
-        name: 0,
+        number: 0,
         group: "",
         capacity: 0
       },
@@ -187,7 +187,6 @@ export default {
           } else {
             this.buildings.push(this.editedBuild);
           }
-          this.close();
         })
         .catch(error => this.errors.push(error));
     },
